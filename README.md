@@ -1,5 +1,8 @@
 # MapperX
 
+## Help us grow
+    Any issues, PRs or feedbacks are welcome and greatly appreciated, if you enjoyed using mapperx, please consider donating. Here is the Open Collective link....
+
 ## What we aim to do
 * 1-to-1 struct-struct mapping
 * Maps underlying nested structs 
@@ -13,10 +16,10 @@
 * Doesn't use reflection at runtime
 
 ## Getting Started
-```
+
     Mapperx heavily relies on code generation. This means that you need to specify 2 arguments source(file path and struct type) and target(file path and struct type)
-    Then mapperx will generate a directory and a package called mapperx, when you run it. Easiest way to use is to use go generate compiler directive in your definitions at the start of a file.
-```
+Then mapperx will generate a directory and a package called mapperx, when you run it. Easiest way to use is to use go generate compiler directive in your definitions at the start of a file. 
+
 
 ```go
 package main
