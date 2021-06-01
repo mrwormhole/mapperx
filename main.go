@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"go/types"
 	"os"
-	"path/filepath"
 	"regexp"
 	"strings"
 
@@ -44,7 +43,7 @@ func main() {
 		exitWithError(err)
 	}
 
-	sampleGenerate()
+	//sampleGenerate()
 }
 
 // Use a simple regexp pattern to match tag values
@@ -84,17 +83,18 @@ func generateMapperx(sourceTypeName string, sourceStructType *types.Struct, targ
 				typeName.Name(),
 			)
 		default:
-			return fmt.Errorf("struct field type not hanled: %T", v)
+			return fmt.Errorf("struct field type not handled: %T", v)
 		}
 		changeSetFields = append(changeSetFields, code)
 	}
 
-	// Generate changeset type
+	// Generate changeset type // TODO: we don't need to generate a new struct
 	changeSetName := sourceTypeName + "ChangeSet"
 	f.Type().Id(changeSetName).Struct(changeSetFields...)
-
+	fmt.Printf("%#v", f)
+	return nil
 	// 1. Collect code in toMap() block
-	var toMapBlock []Code
+	/*var toMapBlock []Code
 
 	// 2. Build "m := make(map[string]interface{})"
 	toMapBlock = append(toMapBlock, Id("m").Op(":=").Make(Map(String()).Interface()))
@@ -125,15 +125,16 @@ func generateMapperx(sourceTypeName string, sourceStructType *types.Struct, targ
 	).Id("toMap").Params().Map(String()).Interface().Block(
 		toMapBlock...,
 	)
+	*/
+	/*
+		// Build the target file name
+		goFile := os.Getenv("GOFILE")
+		ext := filepath.Ext(goFile)
+		baseFilename := goFile[0 : len(goFile)-len(ext)]
+		targetFilename := baseFilename + "_" + strings.ToLower(sourceTypeName) + "_gen.go"
 
-	// Build the target file name
-	goFile := os.Getenv("GOFILE")
-	ext := filepath.Ext(goFile)
-	baseFilename := goFile[0 : len(goFile)-len(ext)]
-	targetFilename := baseFilename + "_" + strings.ToLower(sourceTypeName) + "_gen.go"
-
-	// Write generated file
-	return f.Save(targetFilename)
+		// Write generated file
+		return f.Save(targetFilename)*/
 }
 
 func checkTypeEligibility(typePackage string, typeName string) *types.Struct {
