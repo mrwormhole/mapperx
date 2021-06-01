@@ -36,6 +36,5 @@ type Admin struct {
     ID string
     Country string
     Score string
-    Permissions []string
 }
 ```

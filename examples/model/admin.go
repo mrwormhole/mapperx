@@ -1,10 +1,9 @@
 package model
 
-//go:generate go run github.com/mrwormhole/mapperx github.com/mrwormhole/mapperx/examples/model.Admin github.com/mrwormhole/mapperx/examples/model.User
+//go:generate go run github.com/MrWormHole/mapperx github.com/MrWormHole/mapperx/examples/model.Admin github.com/MrWormHole/mapperx/examples/model.User
 type Admin struct {
-	Name        string
-	ID          string
-	Country     string
-	Score       string
-	Permissions []string
+	Name    string
+	ID      string
+	Country string
+	Score   string
 }
