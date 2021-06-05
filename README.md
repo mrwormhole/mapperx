@@ -23,18 +23,18 @@ Then mapperx will generate a directory and a package called mapperx, when you ru
 ```go
 package main
 
-//go:generate go run github.com/mrwormhole/mapperx/main.go github.com/yourusername/yourproject/domain.User github.com/yourusername/yourproject/domain.Admin
-type User struct {
-    Name string
-    ID string
-    Country string `mapperx:"Score"`
-    Highscore string
-}
-
+//go:generate go run github.com/mrwormhole/mapperx/main.go github.com/yourusername/yourproject/model.Admin github.com/yourusername/yourproject/model.User
 type Admin struct {
     Name string
     ID string
     Country string
-    Score string
+    Score string `mapperx:"Highscore"`
+}
+
+type User struct {
+    Name string
+    ID string
+    Country string
+    Highscore string 
 }
 ```

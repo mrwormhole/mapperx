@@ -5,5 +5,5 @@ type Admin struct {
 	Name    string
 	ID      string
 	Country string
-	Score   string
+	Score   string `mapperx:"Highscore"`
 }
