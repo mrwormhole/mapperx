@@ -5,4 +5,6 @@ type User struct {
 	ID        string
 	Country   string
 	Highscore string
+	troll 	  troll
+	Friends   []string
 }
