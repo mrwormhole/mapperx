@@ -18,8 +18,8 @@
 * Doesn't use reflection at runtime
 
 ## Getting Started
-&nbsp;&nbsp; Mapperx heavily relies on code generation. This means that you need to specify 2 arguments source(file path and struct type) and target(file path and struct type)
-Then mapperx will generate a directory and a package called mapperx, when you run it. Easiest way to use is to do go generate compiler directive in your definitions at the start of a file. 
+&nbsp;&nbsp; Mapperx heavily relies on code generation. This means that you need to specify 3 flag arguments source(file path and struct type) and target(file path and struct type) and output(output directory)
+Then mapperx will generate a directory and a package called mapperx, when you run it. The Easiest way to use is to do go generate compiler directive in your definitions at the start of a file. 
 
 ```shell
 go get -u github.com/MrWormHole/mapperx
@@ -28,7 +28,8 @@ go get -u github.com/MrWormHole/mapperx
 ```go
 package main
 
-//go:generate mapperx github.com/yourusername/yourproject/model.Admin github.com/yourusername/yourproject/model.User
+//go:generate mapperx -source=github.com/yourusername/yourproject/model.Admin -target=github.com/yourusername/yourproject/model.User -output=../mapperx
+
 type troll bool
 
 type Admin struct {
@@ -62,9 +63,9 @@ func mapAdminToUser(admin *model.Admin, user *model.User) {
 	user.Name = admin.Name
 	user.ID = admin.ID
 	user.Country = admin.Country
+	user.Highscore = admin.Score
 	user.troll = admin.troll
 	user.Friends = make([]string, len(admin.Friends))
 	copy(user.Friends, admin.Friends)
-
 }
 ```
