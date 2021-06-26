@@ -59,7 +59,7 @@ package mapperx
 
 import model "github.com/MrWormHole/mapperx/examples/model"
 
-func mapAdminToUser(admin *model.Admin, user *model.User) {
+func MapAdminToUser(admin *model.Admin, user *model.User) {
 	user.Name = admin.Name
 	user.ID = admin.ID
 	user.Country = admin.Country

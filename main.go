@@ -68,7 +68,7 @@ func generate(s *info, t *info, dir string) error {
 	structTagPattern := regexp.MustCompile(`mapperx:"([^"]+)"`)
 
 	// struct-to-struct type check
-	functionName := fmt.Sprintf("map%sTo%s", s.typeName, t.typeName)
+	functionName := fmt.Sprintf("Map%sTo%s", s.typeName, t.typeName)
 	if s.typeName == t.typeName || s.structType.String() == t.structType.String() {
 		return fmt.Errorf("expected 2 different struct types")
 	}
