@@ -7,15 +7,21 @@
 
 ## What we aim to do
 * 1-to-1 struct-struct mapping
-* Maps underlying nested structs 
+* Maps underlying nested slices, maps, structs 
 * Maps same types with same variable names by default
-* Maps same types with different names by tag specification
-* Does use reflection to generate mapperx package
+* Maps same types with different names by tag specification in source struct
+* Does use reflection to generate mapperx package at compile time
 
 ## What we don't aim to do
 * Doesn't aim to do aggregation while mapping
 * Doesn't map not equal types
 * Doesn't use reflection at runtime
+
+## Motivation
+&nbsp;&nbsp;&nbsp;&nbsp; As a firm believer, I strongly emphasize things with separation of concerns. If you look into countless go repositories, you will see unstructured models with no aim to distinguish between request and response models.
+Further way things get more bizarre and I see entities(database models) dumped into a single model package where every request, response models exist. I have seen countless times people are super lazy to create separate entity - DTO(data transfer object) structs
+then they end up with exposing entity struct to end user via REST API including relational database IDs. This is generally due to laziness of creating a new struct which could be response struct with omitted fields.
+I can not blame the laziness sometimes if you have thousand of properties, it is actually really annoying to map something from request to your database model then your database model to response. This is where I thought ``I need a powerful yet so simple mapper codegen``
 
 ## Getting Started
 &nbsp;&nbsp; Mapperx heavily relies on code generation. This means that you need to specify 3 flag arguments source(file path and struct type) and target(file path and struct type) and output(output directory)
