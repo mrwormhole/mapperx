@@ -33,21 +33,23 @@ package main
 type troll bool
 
 type Admin struct {
-	Name    string
-	ID      string
-	Country string
-	Score   string `mapperx:"Highscore"`
-	troll 	troll
-	Friends []string
+	Name        string
+	ID          string
+	Country     string
+	Score       string `mapperx:"Highscore"`
+	troll 	    troll
+	Friends     []string
+	Permissions map[string]string `mapperx:"GivenPermissions"`
 }
 
 type User struct {
-	Name      string
-	ID        string
-	Country   string
-	Highscore string
-	troll 	  troll
-	Friends   []string 
+	Name            string
+	ID              string
+	Country         string
+	Highscore       string
+	troll 	        troll
+	Friends         []string
+	GivenPermissions map[string]string
 }
 ```
 
@@ -67,5 +69,9 @@ func MapAdminToUser(admin *model.Admin, user *model.User) {
 	user.troll = admin.troll
 	user.Friends = make([]string, len(admin.Friends))
 	copy(user.Friends, admin.Friends)
+	user.GivenPermissions = make(map[string]string, len(admin.Permissions))
+	for k, v := range admin.Permissions {
+		user.GivenPermissions[k] = v
+	}
 }
 ```

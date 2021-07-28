@@ -3,9 +3,9 @@ package main
 import "go/types"
 
 type info struct {
-	typeName string
+	typeName    string
 	typePackage string
-	structType *types.Struct
+	structType  *types.Struct
 }
 
 func NewInfo(typeName string, typePackage string, structType *types.Struct) *info {
