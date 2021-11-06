@@ -8,4 +8,5 @@ type User struct {
 	troll            troll
 	Friends          []string
 	GivenPermissions map[string]string
+	Minion *Minion
 }

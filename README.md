@@ -1,9 +1,12 @@
 # MapperX
 
-![MapperX](https://github.com/MrWormHole/mapperx/blob/master/mapperx_logo.png)
+![MapperX](https://github.com/MrWormHole/mapperx/blob/master/logo/mapperx.png)
 
-## Help us grow
-&nbsp;&nbsp; Any issues, PRs or feedbacks are welcome and greatly appreciated, if you enjoyed using mapperx, please consider donating. Here is the Open Collective link....
+## Motivation
+&nbsp;&nbsp;&nbsp;&nbsp; As a firm believer, I strongly emphasize things with separation of concerns. If you look into countless go repositories, you will see unstructured models with no aim to distinguish between request and response models.
+Further way things get more bizarre and I see entities(database models) dumped into a single model package where every request, response models exist. I have seen countless times people are super lazy to create separate entity - DTO(data transfer object) structs
+then they end up with exposing entity struct to end user via REST API including relational database IDs. This is generally due to laziness of creating a new struct which could be response struct with omitted fields.
+I can not blame the laziness sometimes if you have a thousand of properties, it is actually really annoying to map something from request to your database model then your database model to response. This is where I thought ``I need a powerful yet so simple mapper codegen for too many fields``
 
 ## What we aim to do
 * 1-to-1 struct-struct mapping
@@ -17,11 +20,6 @@
 * Doesn't map not equal types
 * Doesn't use reflection at runtime
 
-## Motivation
-&nbsp;&nbsp;&nbsp;&nbsp; As a firm believer, I strongly emphasize things with separation of concerns. If you look into countless go repositories, you will see unstructured models with no aim to distinguish between request and response models.
-Further way things get more bizarre and I see entities(database models) dumped into a single model package where every request, response models exist. I have seen countless times people are super lazy to create separate entity - DTO(data transfer object) structs
-then they end up with exposing entity struct to end user via REST API including relational database IDs. This is generally due to laziness of creating a new struct which could be response struct with omitted fields.
-I can not blame the laziness sometimes if you have thousand of properties, it is actually really annoying to map something from request to your database model then your database model to response. This is where I thought ``I need a powerful yet so simple mapper codegen``
 
 ## Getting Started
 &nbsp;&nbsp; Mapperx heavily relies on code generation. This means that you need to specify 3 flag arguments source(file path and struct type) and target(file path and struct type) and output(output directory)
@@ -34,7 +32,9 @@ go get -u github.com/MrWormHole/mapperx
 ```go
 package main
 
-//go:generate mapperx -source=github.com/yourusername/yourproject/model.Admin -target=github.com/yourusername/yourproject/model.User -output=../mapperx
+//go:generate go run github.com/MrWormHole/mapperx -source=github.com/MrWormHole/mapperx/examples/model.Admin -target=github.com/MrWormHole/mapperx/examples/model.User -directory=../mapperx -filename=XXX_ADMIN_TO_USER_XXX
+// OR
+///go:generate go run github.com/MrWormHole/mapperx -source=github.com/MrWormHole/mapperx/examples/model.Admin -target=github.com/MrWormHole/mapperx/examples/model.User
 
 type troll bool
 
@@ -46,6 +46,7 @@ type Admin struct {
 	troll 	    troll
 	Friends     []string
 	Permissions map[string]string `mapperx:"GivenPermissions"`
+	Minion *Minion
 }
 
 type User struct {
@@ -56,6 +57,7 @@ type User struct {
 	troll 	        troll
 	Friends         []string
 	GivenPermissions map[string]string
+	Minion *Minion
 }
 ```
 
@@ -67,17 +69,17 @@ package mapperx
 
 import model "github.com/MrWormHole/mapperx/examples/model"
 
-func MapAdminToUser(admin *model.Admin, user *model.User) {
+func AdminToUser(admin *model.Admin, user *model.User) {
 	user.Name = admin.Name
 	user.ID = admin.ID
 	user.Country = admin.Country
 	user.Highscore = admin.Score
-	user.troll = admin.troll
 	user.Friends = make([]string, len(admin.Friends))
 	copy(user.Friends, admin.Friends)
 	user.GivenPermissions = make(map[string]string, len(admin.Permissions))
 	for k, v := range admin.Permissions {
 		user.GivenPermissions[k] = v
 	}
+	user.Minion = admin.Minion
 }
 ```
